@@ -56,44 +56,51 @@ void MS_DMAC_setDestinationDataType (uint32_t dmac_base, int value){
     
 }
 
-// void MS_DMAC_sourceAddrAutoIncrement(uint32_t dmac_base, int value){
-    
-//     MS_DMAC_AHBL_TYPE* dmac = (MS_DMAC_AHBL_TYPE*)dmac_base;
-//     if (value < 0 || value > 4){
-//         return;
-//     }
-//     else {
+void MS_DMAC_sourceAddrAutoIncrement(uint32_t dmac_base, int value){
 
-//         unsigned int mask = ((1 << MS_DMAC_AHBL_CONTROL_REG_SAI_LEN) - 1) << MS_DMAC_AHBL_CONTROL_REG_SAI;
+    MS_DMAC_AHBL_TYPE* dmac = (MS_DMAC_AHBL_TYPE*)dmac_base;
+    if (value < 0 || value > 4){
+        return;
+    }
+    else {
+        unsigned int mask = ((1 << MS_DMAC_AHBL_CONTROL_REG_SAI_LEN) - 1) << MS_DMAC_AHBL_CONTROL_REG_SAI;
 
-//         // Clear the bits at the specified offset in the original number
-//         dmac->control &= ~mask;
+        // Clear the bits at the specified offset in the original number
+        dmac->control &= ~mask;
 
-//         // Set the bits with the given value at the specified offset
-//         dmac->control |= (value << MS_DMAC_AHBL_CONTROL_REG_SAI);
+        // Set the bits with the given value at the specified offset
+        dmac->control |= (value << MS_DMAC_AHBL_CONTROL_REG_SAI);
+    }
+}
 
-//     }
-// }
+void MS_DMAC_destinationAddrAutoIncrement(uint32_t dmac_base, int value){
 
-// void MS_DMAC_destinationAddrAutoIncrement(uint32_t dmac_base, int value){
-    
-//     MS_DMAC_AHBL_TYPE* dmac = (MS_DMAC_AHBL_TYPE*)dmac_base;
-//     if (value < 0 || value > 4){
-//         return;
-//     }
-//     else {
+    MS_DMAC_AHBL_TYPE* dmac = (MS_DMAC_AHBL_TYPE*)dmac_base;
+    if (value < 0 || value > 4){
+        return;
+    }
+    else {
+        unsigned int mask = ((1 << MS_DMAC_AHBL_CONTROL_REG_DAI_LEN) - 1) << MS_DMAC_AHBL_CONTROL_REG_DAI;
 
-//         unsigned int mask = ((1 << MS_DMAC_AHBL_CONTROL_REG_DAI_LEN) - 1) << MS_DMAC_AHBL_CONTROL_REG_DAI;
+        // Clear the bits at the specified offset in the original number
+        dmac->control &= ~mask;
 
-//         // Clear the bits at the specified offset in the original number
-//         dmac->control &= ~mask;
+        // Set the bits with the given value at the specified offset
+        dmac->control |= (value << MS_DMAC_AHBL_CONTROL_REG_DAI);
+    }
+}
 
-//         // Set the bits with the given value at the specified offset
-//         dmac->control |= (value << MS_DMAC_AHBL_CONTROL_REG_DAI);
+void MS_DMAC_setFrameCount(uint32_t dmac_base, int value){
 
-//     }
-// }
+    MS_DMAC_AHBL_TYPE* dmac = (MS_DMAC_AHBL_TYPE*)dmac_base;
+    dmac->fcount = value;
+}
 
+int MS_DMAC_getFrameCount(uint32_t dmac_base){
+
+    MS_DMAC_AHBL_TYPE* dmac = (MS_DMAC_AHBL_TYPE*)dmac_base;
+    return (dmac->fcount);
+}
 
 void MS_DMAC_setControlReg (uint32_t dmac_base, int value){
 

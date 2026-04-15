@@ -10,10 +10,14 @@ void MS_DMAC_setSourceDataType(uint32_t dmac_base, int value);
 
 void MS_DMAC_setDestinationDataType (uint32_t dmac_base, int value);
 
-// void MS_DMAC_sourceAddrAutoIncrement(uint32_t dmac_base, int value);
+void MS_DMAC_sourceAddrAutoIncrement(uint32_t dmac_base, int value);
 
-// void MS_DMAC_destinationAddrAutoIncrement(uint32_t dmac_base, int value);
- 
+void MS_DMAC_destinationAddrAutoIncrement(uint32_t dmac_base, int value);
+
+void MS_DMAC_setFrameCount(uint32_t dmac_base, int value);
+
+int MS_DMAC_getFrameCount(uint32_t dmac_base);
+
 void MS_DMAC_setControlReg (uint32_t dmac_base, int value);
 
 int MS_DMAC_getControlReg(uint32_t dmac_base);

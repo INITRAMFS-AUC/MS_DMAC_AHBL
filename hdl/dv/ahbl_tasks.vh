@@ -49,6 +49,7 @@
             HADDR = addr;
             HWRITE = 1'b1;
             @(posedge HCLK);
+            #1;
             HWDATA = data;
             HSEL = 1'b0;
             HTRANS = 2'b00;

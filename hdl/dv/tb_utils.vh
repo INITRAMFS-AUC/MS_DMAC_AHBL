@@ -16,7 +16,7 @@
 
 `define     TB_CLK(clk, period)                 reg clk=0; always #(period/2) clk = !clk;
 `define     TB_SRSTN(rstn, clk, duration)       reg rstn=0; initial begin #duration; @(posedge clk) rstn = 1; end
-`define     TB_ESRST(rst, pol, clk, duration, e_rst_start, e_rst_done)   \ 
+`define     TB_ESRST(rst, pol, clk, duration, e_rst_start, e_rst_done)   \
                                                 event e_rst_start, e_rst_done; \
                                                 initial forever begin \
                                                     @(e_rst_start); \
