@@ -1,0 +1,43 @@
+name: MS_DMAC_AHBL
+bus: ahbl
+addr: 16
+data: 32
+info: AHB-Lite DMA Controller registers
+regs:
+  - name: ctrl
+    info: Control register
+    bits:
+      - {b: 0, name: en, access: rw, info: DMA enable}
+      - {b: [11, 8], name: trigger, access: rw, info: Transfer trigger source - 0=software}
+      - {b: [17, 16], name: src_type, access: rw, info: Source data type - 0=byte 1=halfword 2=word}
+      - {b: [20, 18], name: src_ai, access: rw, info: Source address auto-increment mode}
+      - {b: [25, 24], name: dest_type, access: rw, info: Destination data type - 0=byte 1=halfword 2=word}
+      - {b: [28, 26], name: dest_ai, access: rw, info: Destination address auto-increment mode}
+  - name: status
+    info: Status register
+    bits:
+      - {b: 0, name: done, access: rov, info: Transfer complete flag}
+  - name: saddr
+    info: Source address register
+    bits:
+      - {b: [31, 0], name: val, access: rw, info: Source base address}
+  - name: daddr
+    info: Destination address register
+    bits:
+      - {b: [31, 0], name: val, access: rw, info: Destination base address}
+  - name: size
+    info: Frame size register
+    bits:
+      - {b: [15, 0], name: val, access: rw, info: Number of transfers minus one}
+  - name: trig
+    info: Software trigger register
+    bits:
+      - {b: 0, name: val, access: sc, info: Write 1 to initiate a software-triggered DMA transfer}
+  - name: fc
+    info: Frame count register
+    bits:
+      - {b: [7, 0], name: val, access: rwv, info: Remaining frame count decremented by hardware on each completed frame}
+  - name: icr
+    info: Interrupt clear register
+    bits:
+      - {b: 0, name: done, access: w1c, info: Latched transfer-complete interrupt status - set by hardware on done pulse - write 1 to clear}
