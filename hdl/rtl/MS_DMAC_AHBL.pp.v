@@ -143,7 +143,7 @@ module MS_DMAC_AHBL (
     //
 
     wire trigger = (trig_val_o && (ctrl_trigger_o == 4'b0)) ||
-                   (|(PIRQ & ctrl_trigger_o) != 1'b0);
+                   (|({3'b0, PIRQ} & ctrl_trigger_o));
 
     // DMA FSM
     localparam  IDLE_STATE  = 5'b00001,
@@ -178,14 +178,14 @@ module MS_DMAC_AHBL (
 
     // Address sequence generator
     reg  [15:0] CNTR;
-    wire [17:0] R_CNTR = (ctrl_src_ai_o == 4) ? CNTR << 2 :
-                         (ctrl_src_ai_o == 2) ? CNTR << 1 :
-                         (ctrl_src_ai_o == 1) ? CNTR      : CNTR;
-    wire [17:0] W_CNTR = (ctrl_dest_ai_o == 4) ? CNTR << 2 :
-                         (ctrl_dest_ai_o == 2) ? CNTR << 1 :
-                         (ctrl_dest_ai_o == 1) ? CNTR      : CNTR;
-    wire [31:0] R_ADDR = (ctrl_src_ai_o  != 0) ? (saddr_val_o + R_CNTR) : saddr_val_o;
-    wire [31:0] W_ADDR = (ctrl_dest_ai_o != 0) ? (daddr_val_o + W_CNTR) : daddr_val_o;
+    wire [17:0] R_CNTR = (ctrl_src_ai_o == 4) ? {2'b0, CNTR} << 2 :
+                         (ctrl_src_ai_o == 2) ? {2'b0, CNTR} << 1 :
+                         (ctrl_src_ai_o == 1) ? {2'b0, CNTR}      : {2'b0, CNTR};
+    wire [17:0] W_CNTR = (ctrl_dest_ai_o == 4) ? {2'b0, CNTR} << 2 :
+                         (ctrl_dest_ai_o == 2) ? {2'b0, CNTR} << 1 :
+                         (ctrl_dest_ai_o == 1) ? {2'b0, CNTR}      : {2'b0, CNTR};
+    wire [31:0] R_ADDR = (ctrl_src_ai_o  != 0) ? (saddr_val_o + 32'(R_CNTR)) : saddr_val_o;
+    wire [31:0] W_ADDR = (ctrl_dest_ai_o != 0) ? (daddr_val_o + 32'(W_CNTR)) : daddr_val_o;
 
     always @(posedge HCLK or negedge HRESETn)
         if (!HRESETn)
@@ -214,6 +214,6 @@ module MS_DMAC_AHBL (
     assign M_HTRANS  = M_HREADY & ((state == RA_STATE) || (state == WA_STATE)) ? 2'h2 : 2'h0;
     assign M_HWDATA  = (state == WD_STATE) ? aligned_rdata : 32'hEEEEEEEE;
     assign M_HWRITE  = (state == WA_STATE) ? 1'b1 : 1'b0;
-    assign M_HSIZE   = (state == RA_STATE) ? ctrl_src_type_o : ctrl_dest_type_o;
+    assign M_HSIZE   = (state == RA_STATE) ? {1'b0, ctrl_src_type_o} : {1'b0, ctrl_dest_type_o};
 
 endmodule
