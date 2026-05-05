@@ -53,8 +53,8 @@ module MS_DMAC_AHBL (
     input   wire    PIRQ
 );
 
-    localparam  CTRL_REG_OFF    =   8'h00, 
-                STATUS_REG_OFF  =   8'h04, 
+    localparam  CTRL_REG_OFF    =   8'h00,
+                STATUS_REG_OFF  =   8'h04,
                 SADDR_REG_OFF   =   8'h08,
                 DADDR_REG_OFF   =   8'h0C,
                 SIZE_REG_OFF    =   8'h10,
