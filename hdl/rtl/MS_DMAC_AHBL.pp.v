@@ -143,7 +143,7 @@ module MS_DMAC_AHBL (
     //
 
     wire trigger = (trig_val_o && (ctrl_trigger_o == 4'b0)) ||
-                   (|(PIRQ & ctrl_trigger_o) != 1'b0);
+                   (|({3'b0, PIRQ} & ctrl_trigger_o) != 4'b0000);
 
     // DMA FSM
     localparam  IDLE_STATE  = 5'b00001,
